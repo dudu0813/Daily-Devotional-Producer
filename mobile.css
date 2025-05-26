@@ -19,14 +19,11 @@ body {
 .preview-section {
     flex: 1 1 100%;
     /* 占满容器宽度 */
-    width: 100%;
-    /* 确保不超出屏幕 */
     margin-bottom: 20px;
     /* 增加间距 */
 }
 
 .form-section {
-    flex: 1;
     background-color: white;
     padding: 20px;
     border-radius: 8px;

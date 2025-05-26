@@ -10,8 +10,19 @@ body {
 
 .container {
     display: flex;
-    flex: 1;
+    flex-direction: column;
+    /* 改为垂直排列 */
     gap: 20px;
+}
+
+.form-section,
+.preview-section {
+    flex: 1 1 100%;
+    /* 占满容器宽度 */
+    width: 100%;
+    /* 确保不超出屏幕 */
+    margin-bottom: 20px;
+    /* 增加间距 */
 }
 
 .form-section {
@@ -39,7 +50,9 @@ body {
 
 #imageContainer {
     width: 100%;
-    height: calc(100vh - 150px);
+    height: auto;
+    min-height: 300px;
+    max-height: 50vh;
     overflow: auto;
     display: flex;
     justify-content: center;

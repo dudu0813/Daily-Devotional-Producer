@@ -1,5 +1,5 @@
 document.fonts.ready.then(() => {
-  console.log('所有字体已加载完成');
+    console.log('所有字体已加载完成');
 });
 
 document.addEventListener('DOMContentLoaded', function() {

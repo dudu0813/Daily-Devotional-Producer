@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>每日灵修生成器</title>
+    <style>
+        /* 定义字体 */
+        
+        @font-face {
+            font-family: '江西拙楷';
+            src: url('fonts/jiangxizhuokai.ttf') format('ttf');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+            /* 确保文本在字体加载期间可见 */
+        }
+        
+        @font-face {
+            font-family: 'Aa扁雅楷';
+            src: url('fonts/AaBianYaKai-2.ttf') format('ttf');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+            /* 确保文本在字体加载期间可见 */
+        }
+    </style>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- 在body底部引入外部JS文件 -->
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <script src="script.js"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <div class="container">
+
+        <div class="form-section">
+            <div class="button-group">
+                <button id="saveBtn">保存内容</button>
+                <button id="downloadBtn">下载图片</button>
+                <button id="clearAllBtn">全部清空</button>
+
+            </div>
+
+            <!-- 替换原来的图片上传区域为Unsplash图片获取区域 -->
+            <div class="form-group image-upload-container">
+                <label for="unsplashImageBtn">背景图片</label>
+                <button id="unsplashImageBtn">获取随机图片</button>
+                <button class="reset-field" data-target="unsplashImage">清空</button>
+                <img id="unsplashImage" alt="Unsplash图片" src="" style="display: none; max-width: 350px; height: auto;">
+            </div>
+
+            <div class="form-group">
+                <label for="title">标题
+                    <button class="reset-field" data-target="title">清空</button>
+                </label>
+                <input type="text" id="title" placeholder="输入标题">
+
+            </div>
+
+            <div class="form-group">
+                <label for="date">日期
+                    <button class="reset-field" data-target="date">清空</button>
+                </label>
+                <input type="date" id="date">
+
+            </div>
+
+            <div class="form-group">
+                <label for="content1">每日经文
+                    <button class="reset-field" data-target="content1">清空</button>
+                </label>
+                <textarea id="content1" placeholder="输入文字内容"></textarea>
+
+            </div>
+
+            <div class="form-group">
+                <label for="content2">每日灵修
+                    <button class="reset-field" data-target="content2">清空</button>
+                </label>
+                <!-- 替换原来的textarea为Quill编辑器容器 -->
+                <div id="editor-content2"></div>
+                <!-- 隐藏的input用于存储编辑器内容 -->
+                <input type="hidden" id="content2">
+
+            </div>
+
+            <div class="form-group">
+                <label for="content3">默想思量
+                    <button class="reset-field" data-target="content3">清空</button>
+                </label>
+                <textarea id="content3" placeholder="输入文字内容"></textarea>
+
+            </div>
+
+            <div class="form-group">
+                <label for="content4">今日麦琴读经
+                    <button class="reset-field" data-target="content4">清空</button>
+                </label>
+                <textarea id="content4" placeholder="输入文字内容"></textarea>
+
+            </div>
+
+
+
+        </div>
+
+        <!-- 放大缩小 -->
+
+        <div class="preview-section">
+            <div id="imageContainer">
+                <div class="image-placeholder">
+                    <p>生成的图片将显示在这里</p>
+                </div>
+            </div>
+            <div class="preview-controls">
+                <button id="zoomInBtn">放大</button>
+                <button id="zoomOutBtn">缩小</button>
+                <button id="resetZoomBtn">重置</button>
+            </div>
+        </div>
+    </div>
+    </div>
+
+</body>
+
+</html>

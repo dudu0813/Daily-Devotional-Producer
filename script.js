@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 添加富文本内容（content2）
         const content2Div = document.createElement('div');
         content2Div.innerHTML = quill.root.innerHTML;
-        content2Div.style.fontFamily = "鼎猎宋刻体, 江西拙楷";
+        content2Div.style.fontFamily = "变雅楷";
         content2Div.style.fontSize = '54px';
         content2Div.style.color = '#333';
         content2Div.style.lineHeight = '1.3';
@@ -553,7 +553,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             switch (contentId) {
                 case 'content1':
-                    p.style.fontFamily = '鼎猎宋刻体, 江西拙楷';
+                    p.style.fontFamily = '变雅楷';
                     p.style.fontSize = '54px';
                     p.style.color = '#333';
                     p.style.lineHeight = '1.3';

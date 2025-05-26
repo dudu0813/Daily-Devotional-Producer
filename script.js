@@ -349,7 +349,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (title) {
             const titleElement = document.createElement('h1');
             titleElement.textContent = '《' + title + '》';
-            titleElement.style.fontFamily = '鼎猎宋刻体';
+            titleElement.style.fontFamily = '江西拙楷';
             titleElement.style.fontSize = '60px';
             titleElement.style.color = '#333';
             titleElement.style.marginBottom = '68x';

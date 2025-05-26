@@ -409,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function() {
         content2Div.style.marginBottom = '35px';
         content2Div.style.textAlign = 'justify';
         content2Div.style.textJustify = 'inter-ideograph';
-        content2Div.style.letterSpacing = '-6px';
+        content2Div.style.letterSpacing = '-2px';
         tempDiv.appendChild(content2Div);
 
         // 添加分割线容器（用于控制间距）after content2
@@ -560,7 +560,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     p.style.marginBottom = '60px';
                     p.style.textAlign = 'justify';
                     p.style.textJustify = 'inter-ideograph';
-                    p.style.letterSpacing = '-6px';
+                    p.style.letterSpacing = '-4px';
                     break;
 
                 case 'content3':

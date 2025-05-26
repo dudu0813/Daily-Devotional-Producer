@@ -1,3 +1,7 @@
+document.fonts.ready.then(() => {
+  console.log('所有字体已加载完成');
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     // Unsplash API 配置
     const UNSPLASH_ACCESS_KEY = 'wSP9ev4ztTjZ1_-lxjttI-Vvmshz9GBr1VOYFZnyPjI'; // 替换为您的Unsplash Access Key

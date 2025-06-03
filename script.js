@@ -5,7 +5,7 @@ document.fonts.ready.then(() => {
 document.addEventListener('DOMContentLoaded', function() {
     // Unsplash API 配置
     const UNSPLASH_ACCESS_KEY = 'wSP9ev4ztTjZ1_-lxjttI-Vvmshz9GBr1VOYFZnyPjI'; // 替换为您的Unsplash Access Key
-    const UNSPLASH_API_URL = 'https://api.unsplash.com/photos/random?query=christian,nature,bible&orientation=landscape&client_id=' + UNSPLASH_ACCESS_KEY;
+    const UNSPLASH_API_URL = 'https://api.unsplash.com/photos/random?query=christian,nature,bible,animals,love,family&orientation=landscape&client_id=' + UNSPLASH_ACCESS_KEY;
 
     // 图片缩放控制
     let currentScale = 1;

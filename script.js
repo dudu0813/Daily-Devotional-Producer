@@ -150,13 +150,11 @@ document.addEventListener('DOMContentLoaded', function() {
         // 计算周数（从1开始）
         const weekNumber = Math.floor((dayOfMonth + firstDayOfWeek - 1) / 7) + 1;
 
-        // 获取当前是星期几（0-6，0是周日）
-        let dayOfWeek = currentDate.getDay();
-        // 转换为1-7（1是周日，7是周六）
-        dayOfWeek = dayOfWeek === 0 ? 1 : dayOfWeek + 1;
+        // 直接使用当天的日期（如 24）
+        const dayOfMonthDisplay = dayOfMonth;
 
-        // 格式化为 W周数-星期几
-        const fileName = `W${weekNumber}-${dayOfWeek}`;
+        // 格式化为 W周数-日期
+        const fileName = `W${weekNumber}-${dayOfMonthDisplay}`;
 
         link.download = `${fileName}.png`;
         link.href = generatedCanvas.toDataURL('image/png');

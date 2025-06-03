@@ -152,21 +152,39 @@ button:hover {
 }
 
 .preview-controls {
-    display: flex;
+    display: block;
+    position: absolute;
+    width: 30px;
+    right: 53px;
     gap: 10px;
     margin-top: 20px;
     justify-content: center;
 }
 
 .preview-controls button {
-    padding: 5px 10px;
+    float: right;
+    display: block;
+    width: 40px;
+    height: 40px;
+    border-radius: 25px;
+    padding: 10px;
     background-color: #f0f0f0;
-    color: #333;
     border: 1px solid #ddd;
-    border-radius: 4px;
     cursor: pointer;
-    font-size: 14px;
     transition: all 0.3s;
+    margin-bottom: 10px;
+}
+
+.preview-controls button span {
+    width: 30px;
+    display: block;
+    position: relative;
+    left: -5px;
+    bottom: -13px;
+    color: #333;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
 }
 
 .preview-controls button:hover {

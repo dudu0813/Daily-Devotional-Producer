@@ -135,26 +135,28 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const link = document.createElement('a');
-        const title = document.getElementById('title').value.trim();
         const dateValue = document.getElementById('date').value;
+        const currentDate = dateValue ? new Date(dateValue) : new Date();
 
-        // 格式化日期为YYYYMMDD
-        let fileName = '';
-        if (dateValue) {
-            const date = new Date(dateValue);
-            const formattedDate = `${date.getFullYear()}${(date.getMonth() + 1).toString().padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
-            fileName = formattedDate;
-        }
+        // 获取当月第一天
+        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
 
-        // 如果有标题，添加到文件名中
-        if (title) {
-            fileName += title;
-        }
+        // 计算当月第一天是星期几（0是周日，6是周六）
+        const firstDayOfWeek = firstDayOfMonth.getDay();
 
-        // 如果既没有日期也没有标题，使用默认名称
-        if (!fileName) {
-            fileName = '文字长图';
-        }
+        // 计算当前日期是当月的第几天
+        const dayOfMonth = currentDate.getDate();
+
+        // 计算周数（从1开始）
+        const weekNumber = Math.floor((dayOfMonth + firstDayOfWeek - 1) / 7) + 1;
+
+        // 获取当前是星期几（0-6，0是周日）
+        let dayOfWeek = currentDate.getDay();
+        // 转换为1-7（1是周日，7是周六）
+        dayOfWeek = dayOfWeek === 0 ? 1 : dayOfWeek + 1;
+
+        // 格式化为 W周数-星期几
+        const fileName = `W${weekNumber}-${dayOfWeek}`;
 
         link.download = `${fileName}.png`;
         link.href = generatedCanvas.toDataURL('image/png');
@@ -506,29 +508,18 @@ document.addEventListener('DOMContentLoaded', function() {
         textJustify: inter-ideograph; 
         letterSpacing: -10px; 
         ">
-            亲爱的弟兄姐妹，平安。
-            <br>
-            <br>
-            感谢您使用约伯之家的每日灵修材料。欢迎您能够每天用此材料和几位肢体一起灵修，彼此鼓励守望。也请您和其他肢体介绍分享此灵修材料。您的朋友若需要固定收到灵修材料，请他们把邮箱发送到"
-            <a style="color:#a82222; 
-            font-style:italic">
-            yueboQT@126.com
-            </a>
-            "，我们会于每月底将下个月的约伯之家每日灵修推送到您朋友的邮箱。
-            <br>
-            <br>
-            谢谢，也请您每天把此灵修材料贴在您的朋友圈里，使更多的人蒙受神的祝福。
+            欢迎您每天和朋友一起灵修，彼此鼓励守望，也请您每天把此灵修材料貼在您的朋友圈，影响您朋友圈的人蒙受神的祝福。
             <br>
             <br>
             <a style="font-style:italic;
             text-align: left; ">
             教会的DNA:
             <br>
-            <sup>「</sup><sub>a </sub>爱慕耶稣<sup> 路 Lu10:27」;</sup>
-            <sup>「</sup><sub>b </sub>孩子的心<sup> 太 Mt18:3-4」;</sup>
-            <sup>「</sup><sub>c </sub>谈论耶稣<sup> 申 De6:4-9」;</sup>
-            <sup>「</sup><sub>d </sub>遵行主话<sup> 雅 Jas1:22」;</sup>
-            <sup>「</sup><sub>e </sub>带领门徒<sup> 太 Mt28:19-20」;</sup>
+            <sup>「</sup><sub>a </sub>爱慕耶稣<sup> 路 10:27」;</sup>
+            <sup>「</sup><sub>b </sub>孩子的心<sup> 太 18:3-4」;</sup><br>
+            <sup>「</sup><sub>c </sub>谈论耶稣<sup> 申 6:4-9」;</sup>
+            <sup>「</sup><sub>d </sub>遵行主话<sup> 雅 1:22」;</sup><br>
+            <sup>「</sup><sub>e </sub>带领门徒<sup> 太 28:19-20」;</sup>
             </a>
             <br>
             <br>

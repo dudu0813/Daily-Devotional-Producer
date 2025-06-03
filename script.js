@@ -408,6 +408,7 @@ document.addEventListener('DOMContentLoaded', function() {
         content2Div.style.fontSize = '54px';
         content2Div.style.color = '#333';
         content2Div.style.lineHeight = '1.3';
+        content2Div.style.marginTop = '80px';
         content2Div.style.marginBottom = '35px';
         content2Div.style.textAlign = 'justify';
         content2Div.style.textJustify = 'inter-ideograph';

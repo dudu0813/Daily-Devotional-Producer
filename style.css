@@ -225,3 +225,22 @@ button:hover {
 #resetAllBtn:hover {
     background-color: #f1b0b7;
 }
+
+#uploadImageBtn {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+#uploadImageBtn:hover {
+    background-color: #45a049;
+}
+
+.image-upload-container button {
+    margin-right: 10px;
+}

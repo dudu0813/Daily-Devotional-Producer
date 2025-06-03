@@ -235,38 +235,31 @@ document.addEventListener('DOMContentLoaded', function() {
         unsplashImg.style.display = 'none';
 
         // 创建加载指示器
-        // 修改fetchRandomImageFromUnsplash函数，添加错误处理
-        function fetchRandomImageFromUnsplash() {
-            const unsplashImg = document.getElementById('unsplashImage');
-            unsplashImg.style.display = 'none';
+        const loadingIndicator = document.createElement('div');
+        loadingIndicator.textContent = '正在获取图片...';
+        loadingIndicator.style.margin = '10px 0';
+        unsplashImg.parentNode.insertBefore(loadingIndicator, unsplashImg.nextSibling);
 
-            // 创建加载指示器
-            const loadingIndicator = document.createElement('div');
-            loadingIndicator.textContent = '正在获取图片...';
-            loadingIndicator.style.margin = '10px 0';
-            unsplashImg.parentNode.insertBefore(loadingIndicator, unsplashImg.nextSibling);
-
-            fetch(UNSPLASH_API_URL)
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('网络响应不正常');
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    loadingIndicator.remove();
-                    unsplashImg.src = data.urls.regular;
-                    unsplashImg.style.display = 'block';
-                    debouncedGenerateImage();
-                    debouncedSaveContent();
-                })
-                .catch(error => {
-                    console.error('获取Unsplash图片失败:', error);
-                    loadingIndicator.textContent = '获取图片失败，请重试';
-                    loadingIndicator.style.color = 'red';
-                    setTimeout(() => loadingIndicator.remove(), 3000);
-                });
-        }
+        fetch(UNSPLASH_API_URL)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('网络响应不正常');
+                }
+                return response.json();
+            })
+            .then(data => {
+                loadingIndicator.remove();
+                unsplashImg.src = data.urls.regular;
+                unsplashImg.style.display = 'block';
+                debouncedGenerateImage();
+                debouncedSaveContent();
+            })
+            .catch(error => {
+                console.error('获取Unsplash图片失败:', error);
+                loadingIndicator.textContent = '获取图片失败，请重试';
+                loadingIndicator.style.color = 'red';
+                setTimeout(() => loadingIndicator.remove(), 3000);
+            });
     }
 
     // 清空单个字段的函数

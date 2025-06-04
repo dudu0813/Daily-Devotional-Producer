@@ -156,8 +156,8 @@ document.addEventListener('DOMContentLoaded', function() {
         // 格式化为 W周数-日期
         const fileName = `W${weekNumber}-${dayOfMonthDisplay}`;
 
-        link.download = `${fileName}.png`;
-        link.href = generatedCanvas.toDataURL('image/png');
+        link.download = `${fileName}.jpg`; // 改为.jpg扩展名
+        link.href = generatedCanvas.toDataURL('image/jpeg', 0.7); // 使用JPEG格式
         link.click();
     });
 
@@ -433,15 +433,16 @@ document.addEventListener('DOMContentLoaded', function() {
         // 添加富文本内容（content2）
         const content2Div = document.createElement('div');
         content2Div.innerHTML = quill.root.innerHTML;
-        content2Div.style.fontFamily = "变雅楷";
+        content2Div.style.fontFamily = "TW-kai";
         content2Div.style.fontSize = '54px';
-        content2Div.style.color = '#333';
+        content2Div.style.color = '#111';
         content2Div.style.lineHeight = '1.3';
         content2Div.style.marginTop = '80px';
         content2Div.style.marginBottom = '35px';
         content2Div.style.textAlign = 'justify';
         content2Div.style.textJustify = 'inter-ideograph';
-        content2Div.style.letterSpacing = '-2px';
+        content2Div.style.letterSpacing = '-6px';
+        content2Div.style.fontWeight = '400';
         tempDiv.appendChild(content2Div);
 
         // 添加分割线容器（用于控制间距）after content2
@@ -574,14 +575,14 @@ document.addEventListener('DOMContentLoaded', function() {
 
             switch (contentId) {
                 case 'content1':
-                    p.style.fontFamily = '变雅楷';
+                    p.style.fontFamily = 'TW-Kai';
                     p.style.fontSize = '54px';
-                    p.style.color = '#333';
+                    p.style.color = '#111';
                     p.style.lineHeight = '1.3';
                     p.style.marginBottom = '60px';
                     p.style.textAlign = 'justify';
                     p.style.textJustify = 'inter-ideograph';
-                    p.style.letterSpacing = '-4px';
+                    p.style.letterSpacing = '-6px';
                     break;
 
                 case 'content3':
@@ -648,20 +649,38 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(tempDiv);
 
         // 使用html2canvas生成图片
+        // 替换原来的html2canvas调用部分
         html2canvas(tempDiv, {
             scale: 1,
             logging: false,
-            useCORS: true
+            useCORS: true,
+            backgroundColor: null, // 透明背景
+            quality: 0.8, // 添加质量参数，0.8是较好的平衡点
+            allowTaint: true // 允许跨域图像
         }).then(canvas => {
             generatedCanvas = canvas;
 
             // 生成图片前显示加载中
             imageContainer.innerHTML = '<div class="loading">生成图片中...</div>';
 
+            // 转换为JPEG格式并调整质量
+            const jpegDataUrl = canvas.toDataURL('image/jpeg', 0.7); // 使用0.7的质量
+
+            // 检查大小
+            const dataLength = jpegDataUrl.length;
+            const sizeInMB = (dataLength * 0.75) / (1024 * 1024); // 近似计算大小
+
+            // 如果仍然太大，进一步降低质量
+            let finalDataUrl = jpegDataUrl;
+            if (sizeInMB > 1) {
+                const adjustedQuality = Math.max(0.5, 0.7 * (1 / sizeInMB)); // 动态调整质量
+                finalDataUrl = canvas.toDataURL('image/jpeg', adjustedQuality);
+            }
+
             // 显示预览
             const img = document.createElement('img');
             img.id = 'previewImage';
-            img.src = canvas.toDataURL('image/png');
+            img.src = finalDataUrl;
             img.style.maxWidth = '100%';
             img.style.maxHeight = '100%';
             img.style.objectFit = 'contain';

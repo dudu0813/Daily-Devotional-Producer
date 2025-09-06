@@ -378,7 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 添加标题
         const title = document.getElementById('title').value;
         if (title) {
-            const titleElement = document.createElement('h1');
+            const titleElement = document.createElement('p');
             titleElement.textContent = '《' + title + '》';
             titleElement.style.fontFamily = '江西拙楷';
             titleElement.style.fontSize = '60px';
@@ -408,6 +408,68 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // 添加内容段落1
         addContentParagraph(tempDiv, 'content1');
+        // 专门为content1处理文本节点的函数
+        function processTextNodesForContent1(element) {
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            let node;
+            const nodes = [];
+
+            while (node = walker.nextNode()) {
+                if (node.parentNode && node.parentNode.nodeName !== 'SCRIPT' &&
+                    node.parentNode.nodeName !== 'STYLE' && node.textContent.trim()) {
+                    nodes.push(node);
+                }
+            }
+
+            nodes.forEach(node => {
+                const text = node.textContent;
+                const parent = node.parentNode;
+
+                // 如果文本包含英文或数字
+                if (/[A-Za-z0-9]/.test(text)) {
+                    // 使用正则表达式分割中英文和数字
+                    const segments = text.split(/([A-Za-z0-9]+)/);
+
+                    if (segments.length > 1) {
+                        // 创建文档片段
+                        const fragment = document.createDocumentFragment();
+
+                        segments.forEach(segment => {
+                            if (segment) {
+                                const span = document.createElement('span');
+                                span.textContent = segment;
+
+                                // 如果是英文或数字
+                                if (/[A-Za-z0-9]/.test(segment)) {
+                                    span.style.letterSpacing = '0px';
+                                    span.style.display = 'inline';
+                                } else {
+                                    // 中文保持原样
+                                    span.style.letterSpacing = '-6px';
+                                    span.style.display = 'inline';
+                                }
+
+                                fragment.appendChild(span);
+                            }
+                        });
+
+                        // 替换原始文本节点
+                        parent.replaceChild(fragment, node);
+                    }
+                } else {
+                    // 纯中文文本，保持原样
+                    if (parent.style) {
+                        parent.style.letterSpacing = '-6px';
+                    }
+                }
+            });
+        }
 
         // 添加Unsplash图片（如果有）
         const unsplashImg = document.getElementById('unsplashImage');
@@ -441,8 +503,10 @@ document.addEventListener('DOMContentLoaded', function() {
         content2Div.style.marginBottom = '35px';
         content2Div.style.textAlign = 'justify';
         content2Div.style.textJustify = 'inter-ideograph';
-        content2Div.style.letterSpacing = '-6px';
         content2Div.style.fontWeight = '400';
+
+        // 使用CSS类分别控制中英文间距
+        content2Div.classList.add('chinese-english-spacing');
         tempDiv.appendChild(content2Div);
 
         // 添加分割线容器（用于控制间距）after content2
@@ -582,7 +646,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     p.style.marginBottom = '60px';
                     p.style.textAlign = 'justify';
                     p.style.textJustify = 'inter-ideograph';
-                    p.style.letterSpacing = '-6px';
+                    // 删除这行：p.style.letterSpacing = '-6px';
+
+                    // 添加类名以便后续处理
+                    p.className = 'chinese-content';
+
+                    const contentWithBreaks = content.replace(/\n/g, '<br>');
+                    p.innerHTML = contentWithBreaks;
+
+                    // 处理中英文间距
+                    processTextNodesForContent1(p);
                     break;
 
                 case 'content3':
@@ -641,6 +714,98 @@ document.addEventListener('DOMContentLoaded', function() {
 
             p.style.wordBreak = 'break-word';
             container.appendChild(p);
+        }
+
+        // 在tempDiv添加到body之前，添加样式
+        const style = document.createElement('style');
+        style.textContent = `
+    .chinese-english-spacing {
+        letter-spacing: -6px; /* 默认值，为中文设置 */
+    }
+    
+    /* 针对英文字母和数字设置不同间距 */
+    .chinese-english-spacing * {
+        letter-spacing: -6px; /* 继承默认值 */
+    }
+    
+    /* 使用Unicode范围选择器针对英文和数字 */
+    .chinese-english-spacing :not([class*="ql-"]):matches(*),
+    .chinese-english-spacing :is(span, p, div, li):not([class*="ql-"]) {
+        letter-spacing: -6px; /* 默认值 */
+    }
+    
+    /* 使用JavaScript将动态处理英文字母和数字 */
+`;
+
+        // 将样式添加到head
+        document.head.appendChild(style);
+
+        // 在tempDiv添加到文档后，使用JavaScript处理文本节点
+        document.body.appendChild(tempDiv);
+
+        // 处理content2Div中的文本节点，分别应用中英文样式
+        processTextNodes(content2Div);
+
+        // 处理文本节点的函数
+        function processTextNodes(element) {
+            const walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+
+            let node;
+            const nodes = [];
+
+            while (node = walker.nextNode()) {
+                if (node.parentNode && node.parentNode.nodeName !== 'SCRIPT' &&
+                    node.parentNode.nodeName !== 'STYLE' && node.textContent.trim()) {
+                    nodes.push(node);
+                }
+            }
+
+            nodes.forEach(node => {
+                const text = node.textContent;
+                const parent = node.parentNode;
+
+                // 如果文本包含英文或数字
+                if (/[A-Za-z0-9]/.test(text)) {
+                    // 使用正则表达式分割中英文和数字
+                    const segments = text.split(/([A-Za-z0-9]+)/);
+
+                    if (segments.length > 1) {
+                        // 创建文档片段
+                        const fragment = document.createDocumentFragment();
+
+                        segments.forEach(segment => {
+                            if (segment) {
+                                const span = document.createElement('span');
+                                span.textContent = segment;
+
+                                // 如果是英文或数字
+                                if (/[A-Za-z0-9]/.test(segment)) {
+                                    span.style.letterSpacing = '0px';
+                                    span.style.display = 'inline-block';
+                                } else {
+                                    // 中文保持原样
+                                    span.style.letterSpacing = '-6px';
+                                }
+
+                                fragment.appendChild(span);
+                            }
+                        });
+
+                        // 替换原始文本节点
+                        parent.replaceChild(fragment, node);
+                    }
+                } else {
+                    // 纯中文文本，保持原样
+                    if (parent.style) {
+                        parent.style.letterSpacing = '-6px';
+                    }
+                }
+            });
         }
 
         // 将临时div添加到body（不可见）

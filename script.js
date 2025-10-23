@@ -618,7 +618,7 @@ document.addEventListener('DOMContentLoaded', function() {
             </a>
             <br>
             <br>
-            3.0的教会不需要别的，只要从DNA里真正的爱耶稣，遵祂的旨意行。愿神祝福您！
+            3.0的家教会不需要别的，只要从DNA里真正的爱耶稣，遵祂的旨意行。愿神祝福您！
             <br>
             <br>
             林老师敬上。

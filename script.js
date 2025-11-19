@@ -669,6 +669,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <div style="
                                     position: relative;
                                     margin-left: -20px;
+                                    margin-bottom: 20px;
                                     padding-left: 20px;
                                     box-sizing: border-box;
                                     text-indent: 0;

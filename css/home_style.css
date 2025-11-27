@@ -1,3 +1,26 @@
+ /* 定义字体 */
+        
+        @font-face {
+            font-family: '江西拙楷';
+            /* src: url('/Daily-Devotional-Producer/fonts/jiangxizhuokai-regular.ttf') format('truetype'); */
+            src: url('/fonts/jiangxizhuokai-regular.ttf') format('truetype');
+            unicode-range:U+0000-00FF, U+4E00-9FFF, U+FF00-FFEF;  /* 修复后的范围 */
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+            /* 确保文本在字体加载期间可见 */
+        }
+        
+        @font-face {
+            font-family: 'TW-Kai';
+            /* src: url('/Daily-Devotional-Producer/fonts/TaiWanQuanZiKuZhengKaiTi-2.ttf') format('truetype'); */
+            src: url('/fonts/TaiWanQuanZiKuZhengKaiTi-2.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+            /* 中文范围 */
+            /* 确保文本在字体加载期间可见 */
+        }
 body {
     font-family: 'Microsoft YaHei', sans-serif;
     margin: 0;

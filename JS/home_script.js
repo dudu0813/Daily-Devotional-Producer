@@ -1,3 +1,33 @@
+// ===== 字体修复代码 - 添加到 home_script.js 开头 =====
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. 创建正确的字体定义
+    const fontStyle = document.createElement('style');
+    fontStyle.textContent = `
+        @font-face {
+            font-family: 'JiangxiZhuokai-Fixed';
+            src: url('https://dudu0813.github.io/Daily-Devotional-Producer/fonts/jiangxizhuokai-regular.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: block;
+        }
+    `;
+    document.head.appendChild(fontStyle);
+    
+    // 2. 覆盖Canvas绘制方法
+    const originalFillText = CanvasRenderingContext2D.prototype.fillText;
+    CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
+        const originalFont = this.font;
+        if (text.includes('祂') && this.font.includes('江西拙楷')) {
+            this.font = this.font.replace(/江西拙楷/g, 'JiangxiZhuokai-Fixed');
+        }
+        originalFillText.call(this, text, x, y, maxWidth);
+        this.font = originalFont;
+    };
+    
+    console.log('✅ 字体修复已启用');
+});
+// ===== 字体修复代码结束 =====
+
 document.fonts.ready.then(() => {
     console.log('所有字体已加载完成');
 });

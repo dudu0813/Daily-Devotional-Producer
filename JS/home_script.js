@@ -1,32 +1,93 @@
-// ===== 字体修复代码 - 添加到 home_script.js 开头 =====
-document.addEventListener('DOMContentLoaded', function() {
-    // 1. 创建正确的字体定义
-    const fontStyle = document.createElement('style');
-    fontStyle.textContent = `
-        @font-face {
-            font-family: 'JiangxiZhuokai-Fixed';
-            src: url('https://dudu0813.github.io/Daily-Devotional-Producer/fonts/jiangxizhuokai-regular.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-            font-display: block;
-        }
-    `;
-    document.head.appendChild(fontStyle);
+// ===== 字体修复解决方案 - 添加到 home_script.js 开头 =====
+function reliableFontFix() {
+    console.log('=== 字体修复已启用 ===');
     
-    // 2. 覆盖Canvas绘制方法
-    const originalFillText = CanvasRenderingContext2D.prototype.fillText;
-    CanvasRenderingContext2D.prototype.fillText = function(text, x, y, maxWidth) {
-        const originalFont = this.font;
-        if (text.includes('祂') && this.font.includes('江西拙楷')) {
-            this.font = this.font.replace(/江西拙楷/g, 'JiangxiZhuokai-Fixed');
-        }
-        originalFillText.call(this, text, x, y, maxWidth);
-        this.font = originalFont;
-    };
+    // 方法1: 确保在DOM加载完成后执行
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initFontFix);
+    } else {
+        initFontFix();
+    }
     
-    console.log('✅ 字体修复已启用');
-});
+    function initFontFix() {
+        console.log('🔄 初始化字体修复...');
+        
+        // 创建字体定义
+        const fontStyle = document.createElement('style');
+        fontStyle.textContent = `
+            @font-face {
+                font-family: 'JiangxiZhuokai-Final';
+                src: url('https://dudu0813.github.io/Daily-Devotional-Producer/fonts/jiangxizhuokai-regular.ttf') format('truetype');
+                font-weight: normal;
+                font-style: normal;
+                font-display: block;
+            }
+        `;
+        document.head.appendChild(fontStyle);
+        console.log('✅ 字体定义已创建');
+        
+        // 等待字体加载
+        const finalFont = new FontFace('JiangxiZhuokai-Final', 'url(https://dudu0813.github.io/Daily-Devotional-Producer/fonts/jiangxizhuokai-regular.ttf)');
+        
+        finalFont.load().then(loadedFont => {
+            document.fonts.add(loadedFont);
+            console.log('✅ 字体已加载到字体集');
+            
+            // 覆盖Canvas方法
+            overrideCanvasFinally();
+            
+        }).catch(error => {
+            console.log('❌ 字体加载失败:', error);
+        });
+    }
+    
+    function overrideCanvasFinally() {
+        console.log('🎨 覆盖Canvas方法...');
+        
+        // 获取所有现有的canvas并修复
+        const canvases = document.querySelectorAll('canvas');
+        canvases.forEach((canvas, index) => {
+            const ctx = canvas.getContext('2d');
+            const originalFillText = ctx.fillText;
+            
+            ctx.fillText = function(text, x, y, maxWidth) {
+                const originalFont = this.font;
+                if (this.font.includes('江西拙楷')) {
+                    this.font = this.font.replace('江西拙楷', 'JiangxiZhuokai-Final');
+                }
+                originalFillText.call(this, text, x, y, maxWidth);
+                this.font = originalFont;
+            };
+        });
+        
+        // 覆盖原型方法以捕获新创建的canvas
+        const originalGetContext = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function(type, attributes) {
+            const context = originalGetContext.call(this, type, attributes);
+            
+            if (type === '2d' && context) {
+                const originalFillText = context.fillText;
+                context.fillText = function(text, x, y, maxWidth) {
+                    const originalFont = this.font;
+                    if (this.font.includes('江西拙楷')) {
+                        this.font = this.font.replace('江西拙楷', 'JiangxiZhuokai-Final');
+                    }
+                    originalFillText.call(this, text, x, y, maxWidth);
+                    this.font = originalFont;
+                };
+            }
+            
+            return context;
+        };
+        
+        console.log('✅ Canvas方法覆盖完成');
+    }
+}
+
+// 立即执行字体修复
+reliableFontFix();
 // ===== 字体修复代码结束 =====
+
 
 document.fonts.ready.then(() => {
     console.log('所有字体已加载完成');

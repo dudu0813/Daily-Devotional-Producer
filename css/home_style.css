@@ -3,7 +3,7 @@
         @font-face {
             font-family: '江西拙楷';
             /* src: url('/Daily-Devotional-Producer/fonts/jiangxizhuokai-regular.ttf') format('truetype'); */
-            src: url('../fonts/jiangxizhuokai-regular.ttf') format('truetype');
+            src: url('https://dudu0813.github.io/Daily-Devotional-Producer/fonts/jiangxizhuokai-regular.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
             font-display: swap;

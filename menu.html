@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>灵修目录生成器</title>
+    <link rel="stylesheet" href="css/menu_style.css">
+
+    <style>
+        /* 定义字体 */
+        
+        @font-face {
+            font-family: '华文隶书';
+            src: url('fonts/STLITI.TTF') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+            /* 确保文本在字体加载期间可见 */
+        }
+        
+        @font-face {
+            font-family: 'TW-Kai';
+            src: url('/fonts/TaiWanQuanZiKuZhengKaiTi-2.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+            font-display: swap;
+            /* 中文范围 */
+            /* 确保文本在字体加载期间可见 */
+        }
+        /* 文章列表序号样式 */
+    </style>
+</head>
+
+<body>
+    <!-- 导航链接 -->
+    <div class="nav-links">
+        <a href="index.html" class="nav-link">每日灵修生成器</a>
+        <a href="menu.html" class="nav-link active">灵修目录生成器</a>
+    </div>
+    <div class="container">
+        <!-- 左侧输入区域 -->
+        <div class="input-panel">
+            <!-- 顶部按钮组 -->
+            <div class="action-buttons">
+                <button class="save-btn" id="saveBtn">保存数据</button>
+                <button class="download-btn" id="downloadBtn">下载图片</button>
+                <button class="clear-btn" id="clearBtn">清空数据</button>
+            </div>
+
+            <div class="input-group">
+                <h3>标题信息</h3>
+                <div class="date-input-row">
+                    <div class="date-input-item">
+                        <label for="yearInput">选择年份：</label>
+                        <input type="text" id="yearInput" placeholder="输入年份，例如：2026" value="2026">
+                    </div>
+                    <div class="date-input-item">
+                        <label for="monthInput">选择月份：</label>
+                        <select id="monthInput" class="date-select">
+                            <option value="">请选择月份</option>
+                            <option value="一月">一月</option>
+                            <option value="二月">二月</option>
+                            <option value="三月">三月</option>
+                            <option value="四月">四月</option>
+                            <option value="五月">五月</option>
+                            <option value="六月">六月</option>
+                            <option value="七月">七月</option>
+                            <option value="八月">八月</option>
+                            <option value="九月">九月</option>
+                            <option value="十月">十月</option>
+                            <option value="十一月">十一月</option>
+                            <option value="十二月">十二月</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <h3>文章列表</h3>
+                <div class="articles-container">
+                    <div class="line-numbers" id="lineNumbers"></div>
+                    <textarea id="articlesInput" placeholder="每行输入一个文章标题，例如：
+神的慈爱永不改变
+在患难中得安慰
+信心的试炼与成长
+盼望在于主">
+</textarea>
+                </div>
+                <div class="article-count">文章数量：<span id="articleCount">0</span> 篇</div>
+            </div>
+        </div>
+
+        <!-- 右侧预览区域 -->
+        <div class="preview-panel">
+            <div class="zoom-controls">
+                <button class="zoom-btn" id="zoomOut">缩小</button>
+                <button class="zoom-btn" id="zoomReset">自适应</button>
+                <button class="zoom-btn" id="zoom100">100%</button>
+                <button class="zoom-btn" id="zoomIn">放大</button>
+                <span class="zoom-level" id="zoomLevel">35%</span>
+            </div>
+
+            <div class="preview-container">
+                <div class="canvas-wrapper">
+                    <canvas id="previewCanvas" width="1000" height="800"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/menu_script.js"></script>
+</body>
+
+</html>

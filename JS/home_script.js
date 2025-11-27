@@ -392,7 +392,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const dateValue = document.getElementById('date').value;
         if (dateValue) {
             const date = new Date(dateValue);
-            const weekdays = ['星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
+            const weekdays = ['主日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'];
             const weekday = weekdays[date.getDay()];
             const formattedDate = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日 ${weekday}`;
 

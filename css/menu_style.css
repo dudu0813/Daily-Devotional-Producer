@@ -1,0 +1,416 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+    background: #f5f5f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    /* 确保水平布局 */
+    height: 100vh;
+    overflow: hidden;
+    gap: 20px;
+    /* 添加间距 */
+}
+
+
+/* 左侧输入区域 */
+
+.input-panel {
+    width: 400px;
+    min-width: 400px;
+    /* 确保最小宽度 */
+    background: white;
+    padding: 20px;
+    border-right: 1px solid #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+    margin-bottom: 25px;
+}
+
+.input-group h3 {
+    color: #8B4513;
+    margin-bottom: 15px;
+    font-size: 18px;
+    border-bottom: 2px solid #8B4513;
+    padding-bottom: 5px;
+}
+
+.date-input-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.date-input-item {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+
+input[type="text"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+select:focus {
+    outline: none;
+    border-color: #8B4513;
+}
+
+.date-select {
+    background: white;
+    cursor: pointer;
+}
+
+textarea {
+    width: 100%;
+    height: 300px;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    line-height: 1.6;
+    resize: vertical;
+    transition: border-color 0.3s;
+    font-family: 'Microsoft YaHei', Arial, sans-serif;
+}
+
+textarea:focus {
+    outline: none;
+    border-color: #8B4513;
+}
+
+.article-count {
+    margin-top: 10px;
+    text-align: right;
+    color: #666;
+    font-size: 14px;
+}
+
+.update-preview-btn {
+    background: #8B4513;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+    margin-top: 10px;
+}
+
+.update-preview-btn:hover {
+    background: #6B3300;
+}
+
+
+/* 右侧预览区域 */
+
+.preview-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 600px;
+    /* 确保预览区域有足够宽度 */
+    background: white;
+    padding: 20px;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.zoom-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    /* 稍微减小间距以容纳更多按钮 */
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+    border: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+    /* 如果空间不足可以换行 */
+}
+
+.zoom-btn {
+    background: #8B4513;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    /* 调整padding以适应更多按钮 */
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.3s, transform 0.1s;
+    min-width: 60px;
+    /* 确保按钮有最小宽度 */
+}
+
+.zoom-btn:hover {
+    background: #6B3300;
+    transform: translateY(-1px);
+}
+
+.zoom-btn:active {
+    transform: translateY(0);
+}
+
+.zoom-level {
+    margin-left: 10px;
+    font-weight: bold;
+    color: #8B4513;
+    min-width: 50px;
+}
+
+.preview-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: auto;
+    /* 允许滚动 */
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    height: 100%;
+    min-height: 500px;
+}
+
+.canvas-wrapper {
+    transform-origin: top center;
+    display: flex;
+    justify-content: center;
+    width: 1000px;
+    /* height 由JS动态设置 */
+}
+
+.download-btn {
+    background: #28a745;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 0.3s;
+    align-self: center;
+}
+
+.download-btn:hover {
+    background: #218838;
+}
+
+
+/* 响应式设计 */
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+    }
+    .input-panel {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #e0e0e0;
+    }
+    .preview-panel {
+        height: 70vh;
+    }
+}
+
+
+/* 顶部按钮组样式 */
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e0e0e0;
+}
+
+.save-btn,
+.download-btn,
+.clear-btn {
+    flex: 1;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.save-btn {
+    background: #28a745;
+    color: white;
+}
+
+.save-btn:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.download-btn {
+    background: #007bff;
+    color: white;
+}
+
+.download-btn:hover {
+    background: #0056b3;
+    transform: translateY(-2px);
+}
+
+.clear-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.clear-btn:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+.save-btn:active,
+.download-btn:active,
+.clear-btn:active {
+    transform: translateY(0);
+}
+
+
+/* 移除原来的下载按钮样式 */
+
+.preview-panel .download-btn {
+    display: none;
+}
+
+.articles-container {
+    position: relative;
+}
+
+
+/* 文章列表序号样式 */
+
+.articles-container {
+    position: relative;
+    width: 100%;
+}
+
+.line-numbers {
+    position: absolute;
+    left: 2px;
+    top: 2px;
+    width: 40px;
+    height: 98.5%;
+    background: #f8f9fa;
+    border-right: 1px solid #dee2e6;
+    font-family: monospace;
+    font-size: 12px;
+    color: #6c757d;
+    line-height: 1.75;
+    padding: 15.6px 6.7px;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+    /* 提高行号的层级 */
+    overflow: hidden;
+    box-sizing: border-box;
+    text-align: right;
+}
+
+.line-numbers div {
+    padding-right: 5px;
+}
+
+#articlesInput {
+    padding-left: 50px !important;
+    position: relative;
+    z-index: 1;
+    /* 降低文本域的层级 */
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 300px;
+    line-height: 1.5;
+    background: transparent;
+    /* 确保背景透明 */
+}
+
+
+/* 确保输入组样式正确 */
+
+.input-group {
+    position: relative;
+}
+
+
+/* 导航链接样式 */
+
+.nav-links {
+    text-align: center;
+    padding: 0;
+    background: #f8f9fa;
+    border-bottom: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    height: 55px;
+    /* 固定高度与按钮一致 */
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* 按钮底部对齐 */
+}
+
+.nav-links a {
+    display: inline-flex;
+    margin: 0 15px;
+    padding: 8px 16px 12px;
+    /* 增加底部padding让边框更靠下 */
+    text-decoration: none;
+    color: #666;
+    font-weight: bold;
+    border: none;
+    border-bottom: 3px solid transparent;
+    border-radius: 0;
+    transition: all 0.3s;
+    background: transparent;
+    height: 100%;
+    /* 按钮高度与父容器一致 */
+    align-items: flex-end;
+    /* 文字底部对齐 */
+    box-sizing: border-box;
+}
+
+.nav-links a:hover {
+    color: #007bff;
+}
+
+.nav-links a.active {
+    color: #007bff;
+    border-bottom-color: #007bff;
+}
